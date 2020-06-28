@@ -12,9 +12,9 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [Route("api/[controller]")]
-    [ApiController]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Route("api/[controller]")]
+    //[ApiController]
     public class BookController : ControllerBase
     {
         private readonly ApplicatinDbContext _applicatinDbContext;
@@ -22,17 +22,17 @@ namespace WebApi.Controllers
         {
             _applicatinDbContext = applicatinDbContext;
         }
-        [HttpGet]
+        [HttpGet(template:ApiRoutes.Posts.GetAll)]
         public async Task<ActionResult<IEnumerable<Book>>>GetAllListAsync()
         {
             var res = await _applicatinDbContext.Books.ToListAsync();
             return Ok(res);
         }
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetById(int id)
+        [HttpGet(template: ApiRoutes.Posts.Get)]
+        public async Task<ActionResult<Book>> GetById(int id)
         {
           
-            var res = await _applicatinDbContext.Books.FindAsync(id);
+            var res = await _applicatinDbContext.Books.Where(b=>b.Id ==id).FirstOrDefaultAsync();
             if (res != null)
             {
                 return Ok(res);
@@ -40,7 +40,7 @@ namespace WebApi.Controllers
             return NotFound();
         }
         [HttpPost]
-        public async Task<ActionResult> Create(Book book)
+        public async Task<IActionResult> Create(Book book)
         {
             if(book.Id ==0)
             {

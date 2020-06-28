@@ -38,7 +38,7 @@ namespace WebApi
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicatinDbContext>();
             services.AddControllers();
-            services.AddTransient<IAuthenticateService, AuthenticateService>();
+            services.AddTransient<IIdentityService, IdentityService>();
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
