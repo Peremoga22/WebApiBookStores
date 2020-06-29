@@ -20,17 +20,7 @@ namespace WebApi.Controllers
         public IdentityController(IIdentityService identityService)
         {
             _identityService = identityService;
-        }
-        //[HttpPost(template: ApiRoutes.Identity.Login)]
-        //public IActionResult Post([FromBody] User value)
-        //{
-        //    var user = _identityService.Authenticate(value.UserName, value.Password);
-        //    if(user==null)
-        //    {
-        //        return BadRequest(new { message = "User name or password is incorrect" });
-        //    }
-        //    return Ok(user);
-        //}
+        }    
 
         [HttpPost(template:ApiRoutes.Identity.Register)]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest value)
