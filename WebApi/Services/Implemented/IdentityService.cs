@@ -91,6 +91,33 @@ namespace WebApi.Services.Implemented
                     Errors = createUser.Errors.Select(x => x.Description)
                 };
             }
+            return GetAuthenticationResultForUser(newUser);
+        }
+        public async Task<AuthenticationResult> LoginAsync(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] { "User dose not exists" }
+                };
+            }
+            var userValidPassword = await _userManager.CheckPasswordAsync(user, password);
+
+            if (!userValidPassword)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] { "User password combination is wrong" }
+                };
+            }
+
+            return GetAuthenticationResultForUser(user);
+        }
+        private AuthenticationResult GetAuthenticationResultForUser(IdentityUser  newUser)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var keySecret = Encoding.ASCII.GetBytes(_appSettings.Key);
             var tokenDescriptor = new SecurityTokenDescriptor

@@ -14,12 +14,12 @@ namespace WebApi
         public const string Version = "v1";
         public const string Base = Root + "/" + Version;
 
-        public static class Posts
+        public static class Books
         {
             public const string GetAll = Base + "/book";
-            public const string Update = Base + "/book/{Id}";
-            public const string Delete = Base + "/book/{Id}";
-            public const string Get = Base + "/book/{Id}";
+            public const string Update = Base + "/book/{id}";
+            public const string Delete = Base + "/book/{id}";
+            public const string Get = Base + "/book/{id}";
             public const string Create = Base + "/book";
         }
         public static class Identity

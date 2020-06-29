@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 using WebApi.Data;
 using WebApi.Models;
 
@@ -22,13 +24,13 @@ namespace WebApi.Controllers
         {
             _applicatinDbContext = applicatinDbContext;
         }
-        [HttpGet(template:ApiRoutes.Posts.GetAll)]
+        [HttpGet(template:ApiRoutes.Books.GetAll)]
         public async Task<ActionResult<IEnumerable<Book>>>GetAllListAsync()
         {
             var res = await _applicatinDbContext.Books.ToListAsync();
             return Ok(res);
         }
-        [HttpGet(template: ApiRoutes.Posts.Get)]
+        [HttpGet(template: ApiRoutes.Books.Get)]
         public async Task<IActionResult> GetById(int id)
         {
           
@@ -39,7 +41,7 @@ namespace WebApi.Controllers
             }
             return NotFound();
         }
-        [HttpPost]
+        [HttpPost(template: ApiRoutes.Books.Create)]
         public async Task<IActionResult> Create(Book book)
         {
             if(book.Id ==0)
@@ -52,24 +54,27 @@ namespace WebApi.Controllers
             }                      
             return CreatedAtAction(nameof(GetAllListAsync), new { id = book.Id }, book);
         }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBookAsync(int id, Book book)
+        [HttpPut(template:ApiRoutes.Books.Update)]
+        public async Task<IActionResult> PutBookAsync( Book book)
         {
-            if(id!=book.Id)
+            if(book.Id==0)
             {
                 return BadRequest();
             }
             _applicatinDbContext.Entry(book).State = EntityState.Modified;
             try
             {
+               
+                _applicatinDbContext.Books.Update(book);
                 await _applicatinDbContext.SaveChangesAsync();
+
             }
             catch(DbUpdateConcurrencyException)
             {
-                if(!BookItemExists(id))
+                if(!BookItemExists(book.Id))
                 {
                     return NotFound();
-                }
+                }               
                 else
                 {
                     throw;
@@ -77,11 +82,11 @@ namespace WebApi.Controllers
             }
             return NoContent();
         }
-        [HttpDelete("{id}")]
+        [HttpDelete(template: ApiRoutes.Books.Delete)]
         public async Task<ActionResult<Book>> DeleteAsync(int id)
         {
             var bookItem = await _applicatinDbContext.Books.FindAsync(id);
-            if(bookItem==null)
+            if(bookItem == null)
             {
                 return NotFound();
             }

@@ -12,7 +12,7 @@ namespace WebApi.Services
 {
     public interface IIdentityService
     {
-        User Authenticate(string userName, string password);
         Task<AuthenticationResult> RegisterAsync(string email, string password);
+        Task<AuthenticationResult> LoginAsync(string email, string password);
     }
 }
