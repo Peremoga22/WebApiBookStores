@@ -14,7 +14,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //[Route("api/[controller]")]
     //[ApiController]
     public class BookController : ControllerBase

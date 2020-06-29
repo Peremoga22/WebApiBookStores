@@ -33,36 +33,36 @@ namespace WebApi.Services.Implemented
             _appSettings = appSettings.Value;
             _userManager = userManager;
         }
-        public User Authenticate(string userName, string password)
-        {
-            // var user = _applicationDbContext.Users.FirstOrDefault(u=>u.UserName==userName && u.PasswordHash == password);
-            var user = new User
-            {
-                UserName = userName,
-                Password = password
-            };
-            if (user == null)
-                return null;
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Key);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new System.Security.Claims.ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role,"Admin"),
-                    new Claim(ClaimTypes.Version, "V3.1")
-                }),
-                Expires = DateTime.UtcNow.AddDays(2),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+        //public User Authenticate(string userName, string password)
+        //{
+        //    var user = _applicationDbContext.Users.FirstOrDefault(u=>u.UserName==userName && u.PasswordHash == password);
+        //    var user = new User
+        //    {
+        //        UserName = userName,
+        //        Password = password
+        //    };
+        //    if (user == null)
+        //        return null;
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes(_appSettings.Key);
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Subject = new System.Security.Claims.ClaimsIdentity(new Claim[] {
+        //            new Claim(ClaimTypes.Name, user.Id.ToString()),
+        //            new Claim(ClaimTypes.Role,"Admin"),
+        //            new Claim(ClaimTypes.Version, "V3.1")
+        //        }),
+        //        Expires = DateTime.UtcNow.AddDays(2),
+        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        //    };
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
             
-            user.Token = tokenHandler.WriteToken(token);
+        //    user.Token = tokenHandler.WriteToken(token);
 
-            user.Password = null;
+        //    user.Password = null;
 
-            return user;
-        }
+        //    return user;
+        //}
 
         public async Task<AuthenticationResult> RegisterAsync(string email, string password)
         {
