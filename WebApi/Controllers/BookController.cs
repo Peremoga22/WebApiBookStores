@@ -29,7 +29,7 @@ namespace WebApi.Controllers
             return Ok(res);
         }
         [HttpGet(template: ApiRoutes.Posts.Get)]
-        public async Task<ActionResult<Book>> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
           
             var res = await _applicatinDbContext.Books.Where(b=>b.Id ==id).FirstOrDefaultAsync();

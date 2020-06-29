@@ -17,9 +17,9 @@ namespace WebApi
         public static class Posts
         {
             public const string GetAll = Base + "/book";
-            public const string Update = Base + "/book/{bookId}";
-            public const string Delete = Base + "/book/{bookId}";
-            public const string Get = Base + "/book/{bookId}";
+            public const string Update = Base + "/book/{Id}";
+            public const string Delete = Base + "/book/{Id}";
+            public const string Get = Base + "/book/{Id}";
             public const string Create = Base + "/book";
         }
         public static class Identity
