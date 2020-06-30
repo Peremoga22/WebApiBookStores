@@ -127,7 +127,9 @@ namespace WebApi.Services.Implemented
                     new Claim(type: JwtRegisteredClaimNames.Sub, value: newUser.Email),
                     new Claim(type: JwtRegisteredClaimNames.Jti, value: Guid.NewGuid().ToString()),
                     new Claim(type: JwtRegisteredClaimNames.Email, value: newUser.Email),
-                    new Claim(type: "id",value: newUser.Id)
+                    new Claim(type: ClaimTypes.Role, "User"), //role users in token
+                    new Claim(type: "name",value: newUser.UserName),
+                    new Claim(type: "id", value: newUser.Id)
                 }),
                 Expires = DateTime.UtcNow.AddDays(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keySecret), SecurityAlgorithms.HmacSha256Signature)

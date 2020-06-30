@@ -69,20 +69,15 @@ namespace WebApi
                 config.PostProcess = document =>
                 {
                     document.Info.Version = "v1";
-                    document.Info.Title = "ToDo API";
-                    document.Info.Description = "A simple ASP.NET Core web API";
+                    document.Info.Title = "Book API";
+                    document.Info.Description = "ASP.NET Core web API";
                     document.Info.TermsOfService = "None";
                     document.Info.Contact = new NSwag.OpenApiContact
                     {
-                        Name = "Shayne Boyer",
+                        Name = "Book Stores",
                         Email = string.Empty,
-                        Url = "https://twitter.com/spboyer"
-                    };
-                    document.Info.License = new NSwag.OpenApiLicense
-                    {
-                        Name = "Use under LICX",
-                        Url = "https://example.com/license"
-                    };
+                        Url = "https://github.com/Peremoga22/WebApiBookStores"
+                    };                   
                 };
             });
         }
